@@ -653,11 +653,12 @@ sources:
     model: MITGCM
     args:
       urlpath: '/sciserver/filedb*/ocean/poseidon/LLC4320/2D/SS*'
-      chunks: {'i':4320, 'j':4320, 'time':1, 'face':1}
       xarray_kwargs:
+        engine: zarr
         concat_dim: time
         parallel: True
         combine: nested
+        # chunks: {'i':4320, 'j':4320, 'time':1, 'face':1}
     metadata:
       rename:
         i: X
@@ -677,11 +678,15 @@ sources:
     description: horizontal grid for LLC4320
     driver: zarr
     args:
-      urlpath: '/sciserver/filedb05-01/ocean/poseidon/LLC4320/grid'
+      urlpath: '/sciserver/filedb05-01/ocean/poseidon/LLC4320/GRID'
+      xarray_kwargs:
+        engine: zarr
     metadata:
       swap_dims:
         k: Z
         k_p1: Zp1
+        k_l: Zl
+        k_u: Zu
       rename:
         i: X
         i_g: Xp1
@@ -750,7 +755,6 @@ sources:
         c_p: 3.986e+03
         tempFrz0: 9.01e-02
         dTempFrz_dS: -5.75e-02
-        grid_type: llc
       name: LLC4320
       description: |
         horizontal grid for LLC4320, a general, curvilinear ocean simulations on the cube-sphere.
